@@ -1,3 +1,7 @@
+# 4. Copy and Paste Text
+# - Use shortcuts to select all, copy, and paste text
+# - Use pyperclip to verify copied text
+
 from pywinauto import Application
 import time
 import pyperclip
@@ -9,20 +13,19 @@ notepad = app.window(title_re=".*Notepad")
 edit = notepad.Edit
 
 # Type "Hello Automation"
-edit.type_keys("Hello Automation", with_spaces=True)
+text_to_type= "Hello Automation"
+edit.type_keys(text_to_type, with_spaces=True)
 
 # Select all and copy (Ctrl+A Ctrl+C)
 edit.type_keys("^a^c")
 time.sleep(0.5)
 
-# Move caret to end, insert newline
-edit.type_keys("{END}{ENTER}")
+Pasted_text= pyperclip.paste()
+if text_to_type== Pasted_text:
+    print("Case 4--->Copied text matches expected text!")
+else:
+    print("Copied text does NOT match") 
+    print("Expected:", text_to_type)
+    print("Got:", Pasted_text)
 
-# Paste copied text back into Notepad (Ctrl+V)
-edit.type_keys("^v")
-time.sleep(0.5)
-
-# Now Notepad has original text + pasted copy
-
-# Close Notepad
-app.kill()
+app.kill()  # Close Notepad

@@ -1,3 +1,8 @@
+# 2. Enter and Read Text in Notepad
+# - Type "Hello Automation"
+# - Read back and verify the text
+
+
 from pywinauto import Application
 import time
 
@@ -19,6 +24,8 @@ read_text = edit.window_text()
 # Verify
 if read_text == text_to_type:
     print("Text verified successfully!")
+    print(f"Expected: {text_to_type}")
+    print(f"Got: {read_text}")
 else:
     print("Text verification failed!")
     print(f"Expected: {text_to_type}")
