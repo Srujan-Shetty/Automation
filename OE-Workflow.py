@@ -7,7 +7,9 @@ from pywinauto import Application
 from pywinauto.keyboard import send_keys
 import os
 import time
-import pyautogui
+import sys
+sys.stdout.reconfigure(encoding='utf-8')
+
 
 path = r"C:\UFT\AUG\1.0.8_01AUG_Portable\NT_Release_1.0.8_01AUG_Portable\Release"
 os.chdir(path)
@@ -46,7 +48,7 @@ Information.child_window(title="OK", control_type="Button").click_input()
 #Connect to LoginPrefpage and Click on Continue Button
 dlg.child_window(title="LoginPrefPage", auto_id="LoginPrefPage", control_type="Tab")
 dlg.child_window(title="Continue...(8)", control_type="Button").click_input()
-time.sleep(5)
+time.sleep(10)
 
 #Connect to NorenTrader Main Window
 main_window = app.window(title_re=".*Noren Trader.*")
@@ -116,9 +118,3 @@ else:
     print("Expected_Result:",Expected_Result)
     print("Actual Result:",Error_Msg)
 
-
-
-
-Logs=main_window.child_window(title="Logs", auto_id="FloatingPaneWindow(42883409)", control_type="Window")
-
-Logs.print_control_identifiers()

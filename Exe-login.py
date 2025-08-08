@@ -3,6 +3,7 @@
 # - Validate success/failure messages
 
 from pywinauto import Application
+from pywinauto.keyboard import send_keys
 import os
 import time
 
@@ -56,6 +57,7 @@ main_window.wait('ready', timeout=20)
 Welcome=main_window.child_window(title="Login Successful", auto_id="popupWin", control_type="Window")
 # Extract text From PopUP message
 Message=Welcome.window_text()
+print(Message)
 Login_success=Welcome.child_window(title="OK", auto_id="btnOK", control_type="Button")
 Login_success.click_input()
 
@@ -68,6 +70,30 @@ if Message in Expected:
 else:
     print("Login Error")
 
+Logs=main_window.child_window(title="Logs", auto_id="Logs", control_type="Group")
+Logs_panel=Logs.child_window(title="DataPanel", auto_id="dataPresenter", control_type="Pane")
+Logs_panel.set_focus()
+send_keys('^f')
 
+Search=main_window.child_window(title="SearchPanel", auto_id="SearchPanel", control_type="Pane")
+Search_box=Search.child_window(auto_id="SearchComboBox", control_type="ComboBox")
+Search_box.set_focus()
+Search_box.type_keys("Login Successful",with_spaces=True)
+send_keys('{ENTER}')
+
+Extract=Search.child_window(title="Login Successful", auto_id="SearchComboBox", control_type="ComboBox")
+Msg=Extract.window_text()
+print(Msg)
+
+if Msg in Expected:
+    print("Log Msg Verified")
+    print("Expected:",Expected)
+    print("Actual:",Msg)
+else:
+    print("Log Msg Not Verified")
+    print("Expected:",Expected)
+    print("Actual:",Msg)
+
+# Search.print_control_identifiers()
 
 
